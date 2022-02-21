@@ -3,8 +3,52 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento&display=swap" rel="stylesheet">
   <title>Metaprecatórios Formulário</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
+  <!-- AlpineJS Library -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    html *
+    {
+      font-family: 'Quattrocento', serif !important;
+    }
+  </style>
+  <script>
+    const axios = window.axios;
+
+    function contactForm() {
+      return {
+        formData: {
+          nome: '',
+          cpf: '',
+          phone: ''
+        },
+        is_registered: false,
+        submitData() {
+          var upsite = this;
+          var bdy = {
+            cpf: this.formData.cpf,
+            nome: this.formData.nome,
+            phone: this.formData.phone
+          };
+          axios.post("https://script.google.com/macros/s/AKfycbxWMbr8uYpaQR7sJHecjjQ8Np0-zrP2sLObQrclgiMWWqqkdNAv6gTQQOulch2Twp6Ehg/exec", bdy)
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            }).finally(function () {
+              upsite.is_registered = true;
+          });
+        }
+      }
+    }
+
+  </script>
   <script>
 
     function mask(o, f) {
@@ -33,32 +77,41 @@
   </script>
 </head>
 <body>
-
-<h3 class="text-2xl font-medium text-center">Entre em contato agora</h3>
-<form action="https://script.google.com/macros/s/AKfycbxWMbr8uYpaQR7sJHecjjQ8Np0-zrP2sLObQrclgiMWWqqkdNAv6gTQQOulch2Twp6Ehg/exec" method="post" id="test-form">
-  <input id="doc" type="text" name="cpf" required
-         x-model="formData.cpf"
-         class="cpfcnpj block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
-         placeholder="CPF/CNPJ">
-  <input type="text" name="nome" required
-         x-model="formData.name"
-         class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
-         placeholder="Nome">
-  <input id="phone" type="text" name="telefone" required
-         x-model="formData.phone"
-         onkeypress="mask(this, mphone);" onblur="mask(this, mphone);"
-         class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
-         placeholder="Telefone">
-  <div class="block">
-    <button type="submit"
-            id="submit-form"
-            class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg">
-      Quero vender meu precatório!
-    </button>
+<div x-data="contactForm()">
+  <form
+    x-show="!is_registered"
+    action="https://script.google.com/macros/s/AKfycbxWMbr8uYpaQR7sJHecjjQ8Np0-zrP2sLObQrclgiMWWqqkdNAv6gTQQOulch2Twp6Ehg/exec"
+    @submit.prevent="submitData"
+    method="post" id="test-form">
+    <input id="doc" type="text" name="cpf" required
+           x-model="formData.cpf"
+           class="cpfcnpj block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
+           placeholder="CPF/CNPJ">
+    <input type="text" name="nome" required
+           x-model="formData.nome"
+           class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
+           placeholder="Nome">
+    <input id="phone" type="text" name="telefone" required
+           x-model="formData.phone"
+           onkeypress="mask(this, mphone);" onblur="mask(this, mphone);"
+           class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
+           placeholder="Telefone">
+    <div class="block">
+      <button type="submit"
+              id="submit-form"
+              class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg">
+        Quero vender meu precatório!
+      </button>
+    </div>
+  </form>
+  <div x-show="is_registered" class="flex flex-wrap text-center">
+    <p class="text-xl">Obrigado! Entraremos em contato assim que possível!</p>
   </div>
-</form>
+</div>
 
 <script>
+
+
   var x = document.getElementsByClassName("cpfcnpj");
   for (i = 0; i < x.length; i++) {
     x[i].addEventListener('focus', function (e) {
@@ -92,6 +145,7 @@
       document.getElementById(id).value = x;
     }
   }
+
 </script>
 </body>
 </html>
