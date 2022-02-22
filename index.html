@@ -29,6 +29,11 @@
         },
         is_registered: false,
         submitData() {
+          let config = {
+  headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
+    }
+};
           var upsite = this;
           var bdy = {
             cpf: this.formData.cpf,
