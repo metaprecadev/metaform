@@ -35,7 +35,7 @@
             nome: this.formData.nome,
             phone: this.formData.phone
           };
-          axios.post("https://script.google.com/macros/s/AKfycbxWMbr8uYpaQR7sJHecjjQ8Np0-zrP2sLObQrclgiMWWqqkdNAv6gTQQOulch2Twp6Ehg/exec", bdy)
+          axios.post("https://script.google.com/macros/s/AKfycbwapc9clruniLJm3I1VnWkugJWSAwssuDSTZpFu6YATaFwJYhF1W-sxuP-DPJBywzGmXA/exec", bdy)
             .then(function (response) {
               console.log(response);
             })
@@ -80,7 +80,7 @@
 <div x-data="contactForm()">
   <form
     x-show="!is_registered"
-    action="https://script.google.com/macros/s/AKfycbxWMbr8uYpaQR7sJHecjjQ8Np0-zrP2sLObQrclgiMWWqqkdNAv6gTQQOulch2Twp6Ehg/exec"
+    action="https://script.google.com/macros/s/AKfycbwapc9clruniLJm3I1VnWkugJWSAwssuDSTZpFu6YATaFwJYhF1W-sxuP-DPJBywzGmXA/exec"
     @submit.prevent="submitData"
     method="post" id="test-form">
     <input id="doc" type="text" name="cpf" required
